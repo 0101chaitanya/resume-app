@@ -1,0 +1,14 @@
+label {
+  display: flex;
+  flex-direction: column;
+}
+input[type="text"] {
+  width: 30rem;
+}
+
+input[type="date"] {
+  width: 20rem;
+}
+.section {
+  margin: 2rem;
+}

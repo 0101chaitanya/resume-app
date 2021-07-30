@@ -1,0 +1,10 @@
+label {
+  display: flex;
+  flex-direction: column;
+}
+input[type="text"] {
+  width: 30rem;
+}
+.section {
+  margin: 1rem;
+}
