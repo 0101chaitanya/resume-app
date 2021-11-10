@@ -9,12 +9,13 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import Button from 'react-native-pure-button';
+import { useTheme } from 'react-native-paper';
 
-import { FloatingAction } from 'react-native-floating-action';
-import { Entypo } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { globalStyles } from '../styles';
+/* import Button from 'react-native-pure-button';
+ */
+import { Button } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
+
 // create a component
 import * as ImagePicker from 'expo-image-picker';
 
@@ -43,7 +44,7 @@ const PersonalInfo = ({ navigation }) => {
   }, []);
 
   const pressHandler = (name) => {
-    console.log(PD, image);
+    console.log(PD);
 
     navigation.navigate(name);
   };
@@ -62,14 +63,30 @@ const PersonalInfo = ({ navigation }) => {
       setPD({ ...PD, img: { ...result } });
     }
   };
+  const { container, input, fab, heading, colors, font, button } = useTheme();
 
+  const x = useTheme();
+  console.log(x);
   return (
-    <ScrollView style={globalStyles.container}>
-      <Text style={globalStyles.heading}>Personal Info</Text>
+    <ScrollView
+      style={{
+        ...font,
+        ...container,
+        backgroundColor: colors.background,
+      }}>
+      <Text
+        style={{
+          ...font,
+          color: colors.primary,
+          ...heading,
+        }}>
+        Personal Info
+      </Text>
       <TextInput
-        style={globalStyles.input}
+        style={{ ...font, color: colors.text, ...input }}
         allowFontScaling={true}
         autoFocus={true}
+        placeholderTextColor={colors.placeholder}
         placeholder='First name'
         autoComplete='name-given'
         onChangeText={(firstName) =>
@@ -81,8 +98,9 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.firstName}
       />
       <TextInput
-        style={globalStyles.input}
+        style={{ ...font, color: colors.text, ...input }}
         allowFontScaling={true}
+        placeholderTextColor={colors.placeholder}
         placeholder='Last name'
         autoComplete='name-family'
         onChangeText={(lastName) =>
@@ -94,8 +112,9 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.lastName}
       />
       <TextInput
-        style={globalStyles.input}
+        style={{ ...font, color: colors.text, ...input }}
         allowFontScaling={true}
+        placeholderTextColor={colors.placeholder}
         placeholder='Title'
         onChangeText={(title) =>
           setPD({
@@ -107,13 +126,14 @@ const PersonalInfo = ({ navigation }) => {
       />
       <TextInput
         style={[
-          globalStyles.input,
+          input,
           {
-            height: 60,
+            height: 80,
           },
         ]}
         allowFontScaling={true}
         autoComplete='postal-address'
+        placeholderTextColor={colors.placeholder}
         placeholder='Address'
         textContentType='addressCityAndState'
         dataDetectorTypes='address'
@@ -129,8 +149,9 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.address}
       />
       <TextInput
-        style={globalStyles.input}
+        style={{ ...font, color: colors.text, ...input }}
         allowFontScaling={true}
+        placeholderTextColor={colors.placeholder}
         placeholder='Phone number'
         autoComplete='tel'
         keyboardType='phone-pad'
@@ -143,8 +164,9 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.phone}
       />
       <TextInput
-        style={globalStyles.input}
+        style={{ ...font, color: colors.text, ...input }}
         allowFontScaling={true}
+        placeholderTextColor={colors.placeholder}
         placeholder='Email'
         autoComplete='email'
         keyboardType='email-address'
@@ -157,16 +179,17 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.email}
       />
       <TextInput
+        placeholderTextColor={colors.placeholder}
         placeholder='Description'
         style={[
-          globalStyles.input,
+          input,
           {
-            height: 60,
+            height: 90,
           },
         ]}
         allowFontScaling={true}
         multiline={true}
-        numberOfLines={4}
+        numberOfLines={6}
         onChangeText={(description) =>
           setPD({
             ...PD,
@@ -176,62 +199,36 @@ const PersonalInfo = ({ navigation }) => {
         value={PD.description}
       />
       <Button
-        style={{
-          margin: 15,
-          marginBottom: 100,
-          padding: 10,
-          alignSelf: 'center',
-          backgroundColor: '#ffffff',
-
-          borderWidth: 1,
-          borderColor: '#536DFE',
-          borderRadius: 5,
-          width: Platform.OS === 'web' ? '40%' : '80%',
-        }}
-        textStyle={{
-          color: '#db7d7a',
-
-          fontSize: 18,
-          textAlign: 'center',
-        }}
+        mode='outlined'
+        style={{ ...button, marginBottom: 90 }}
+        labelStyle={{ ...font, color: colors.text }}
         onPress={pickImage}>
-        Upload Photo
+        UPLOAD PHOTO
       </Button>
 
-      <FloatingAction
-        actions={actions}
-        floatingIcon={<Feather name='navigation' size={24} color='black' />}
-        onPressItem={(name) => {
-          pressHandler(name);
+      <FAB
+        style={fab('right')} //styles.fabRight
+        small
+        icon='arrow-right-bold'
+        //arrow-left-thick
+        /* <Entypo name='forward' size={24} color='black' /> */
+        onPress={() => {
+          pressHandler('Experience');
+        }}
+      />
+      <FAB
+        style={fab('left')}
+        small
+        icon='arrow-left-thick'
+        //
+        /* <Entypo name='forward' size={24} color='black' /> */
+        onPress={() => {
+          pressHandler('Welcome');
         }}
       />
     </ScrollView>
   );
 };
-const actions = [
-  {
-    text: 'Move forward',
-    icon: <Entypo name='forward' size={24} color='black' />,
-    name: 'Experience',
-    position: 1,
-  },
-  {
-    text: 'Go back',
-    icon: <Entypo name='back' size={24} color='black' />,
-    name: 'Welcome',
-    position: 1,
-  },
-];
-
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-});
 
 //make this component available to the app
 export default PersonalInfo;

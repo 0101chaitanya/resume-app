@@ -6,6 +6,8 @@ import Welcome from './MSComponents/Welcome';
 import PersonalInfo from './MSComponents/PersonalInfo';
 import Experience from './MSComponents/Experience';
 import { useNavigation } from '@react-navigation/native';
+import Education from './MSComponents/Education';
+import Projects from './MSComponents/Projects';
 
 // create a component
 const Stack = createNativeStackNavigator();
@@ -15,14 +17,16 @@ const MainStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName='Personal informarmation'
+      initialRouteName='Projects'
       title='Resume creation wizard'
       screenOptions={{
         headerShown: false, //: route === 'home' ? : true
       }}>
       <Stack.Screen name='Welcome' component={Welcome} />
-      <Stack.Screen name='Personal informarmation' component={PersonalInfo} />
+      <Stack.Screen name='Personal information' component={PersonalInfo} />
       <Stack.Screen name='Experience' component={Experience} />
+      <Stack.Screen name='Education' component={Education} />
+      <Stack.Screen name='Projects' component={Projects} />
     </Stack.Navigator>
   );
 };
@@ -31,8 +35,9 @@ const MainStack = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    /*   justifyContent: 'center',
     alignItems: 'center',
+    */
   },
 });
 
